@@ -1,0 +1,6 @@
+.env
+modelTrainingDemo.py
+exoplanet.csv
+requirements.txt
+__pycache__/
+venv/

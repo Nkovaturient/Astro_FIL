@@ -1,70 +1,266 @@
-# ML Workflow with Filecoin & Lighthouse Storage
+## AstroFIL MVP: Exoplanet Classifier with Filecoin/Lightouse
 
-This project demonstrates a complete machine learning workflow leveraging decentralized storage through Filecoin and Lighthouse Storage. It showcases how to store datasets and trained ML models on the decentralized Filecoin network, providing persistence, availability, and verifiability for machine learning assets.
+- The AstroFIL MVP is a Python-based project that demonstrates an end-to-end workflow for building a machine learning model to classify exoplanets using data from the NASA Exoplanet Archive. It integrates decentralized storage via Lighthouse (a Filecoin-based storage solution) to store datasets, trained models, and metadata. The project showcases data retrieval, preprocessing, model training, decentralized storage, and inference, all in a streamlined pipeline.
+This README provides a comprehensive guide to the project, including its purpose, workflow, setup instructions, and a detailed diagrammatic representation of the process.
 
-## Overview
+## 🌌 Project Overview
 
-The workflow includes the following steps:
+- The AstroFIL MVP performs the following tasks:
 
-1. **Dataset Creation & Upload**: Generates a synthetic diabetes prediction dataset and uploads it to Filecoin via Lighthouse
-2. **Model Training**: Downloads the dataset from Filecoin, trains a Random Forest classifier model
-3. **Model Storage**: Uploads the trained model and its metadata to Filecoin
-4. **Model Inference**: Downloads the model and performs predictions on sample data
+Fetches exoplanet data from the NASA Exoplanet Archive.
+Preprocesses the data into a clean, usable format.
+Trains a Random Forest Classifier to label exoplanets as "confirmed."
+Uploads the dataset, trained model, and metadata to Lighthouse Storage.
+Performs inference on sample data to demonstrate the model's functionality.
+Stores metadata with Content Identifiers (CIDs) for decentralized access.
 
-## Prerequisites
+The project is designed for scalability and reproducibility, leveraging decentralized storage to ensure data and model persistence.
+🎯 Features
 
-- Python 3.8+
-- Required Python packages:
-  ```
-  pip install lighthouseweb3 scikit-learn pandas numpy joblib requests
-  ```
-- A Lighthouse Storage API key (sign up at [lighthouse.storage](https://files.lighthouse.storage/dashboard))
+Data Source: Pulls real exoplanet data (orbital period, radius, mass, stellar temperature) from NASA's Exoplanet Archive.
+Machine Learning: Trains a Random Forest Classifier with scikit-learn.
+Decentralized Storage: Uses Lighthouse to store files on the Filecoin network, returning CIDs for retrieval.
+Error Handling: Includes robust checks for upload/download failures.
+Temporary File Management: Uses Python's tempfile to handle temporary files cleanly.
+Inference: Demonstrates model predictions on test data.
 
-## Installation
+📋 Prerequisites
+Before running the project, ensure you have:
 
-1. Clone this repository
-2. Replace the `LIGHTHOUSE_API_KEY` variable in the script with your actual Lighthouse API key
+Python 3.8+ installed.
+A Lighthouse API key (sign up at Lighthouse Storage).
+Internet access to fetch NASA data and interact with Lighthouse.
 
-## Usage
+Dependencies
+Install the required Python packages listed in requirements.txt:
+pandas
+numpy
+scikit-learn
+joblib
+requests
+lighthouseweb3
 
-Simply run the script:
+Run the following command to install dependencies:
+pip install -r requirements.txt
 
-```
-python modelTrainingDemo.py
-```
+🚀 Setup Instructions
 
-## Workflow Details
+Clone the Repository:
+git clone <repository-url>
+cd astrofil-mvp
 
-### 1. Dataset Management
 
-The script first creates a synthetic diabetes prediction dataset with features like age, BMI, blood pressure, and glucose levels. It then uploads this dataset to Filecoin via Lighthouse Storage, generating a Content Identifier (CID) that can be used to retrieve the dataset later.
+Install Dependencies:
+pip install -r requirements.txt
 
-### 2. Model Training
 
-The script downloads the dataset from Filecoin using its CID, then trains a Random Forest classifier to predict diabetes based on the features. The model's performance is evaluated using accuracy metrics.
+Set Up Lighthouse API Key:
 
-### 3. Model Storage
+Obtain an API key from Lighthouse Storage.
+Update the API_KEY variable in the script:API_KEY = "your-lighthouse-api-key"
 
-Both the trained model (serialized with joblib) and a JSON metadata file containing information about the model's architecture, features, and performance are uploaded to Filecoin. This creates permanent, verifiable storage for your ML assets.
 
-### 4. Model Inference
 
-Finally, the script demonstrates how to download the model from Filecoin and use it to make predictions on new data. This shows the complete lifecycle of ML assets on decentralized storage.
 
-## Benefits of Using Filecoin for ML Workflows
+Run the Script:
+python astrofil_mvp.py
 
-- **Persistence**: Models and datasets are stored on a decentralized network designed for long-term storage
-- **Verifiability**: Content addressing ensures data integrity
-- **Availability**: Data can be accessed from anywhere through IPFS gateways
-- **Censorship Resistance**: No single entity controls access to your ML assets
 
-## Security Note
+Expected Output:
 
-The example includes an API key for demonstration purposes. In a real implementation, you should:
-- Never hardcode API keys in your source code
-- Use environment variables or a secure configuration management system
-- Consider setting up access controls for your uploaded ML assets
+Console logs showing dataset creation, upload progress, model training, accuracy, and inference results.
+CIDs for the dataset, model, and metadata files stored on Lighthouse.
+
+
+
+🛠️ Code Structure
+The project consists of a single Python script (astrofil_mvp.py) with the following key functions:
+
+
+
+Function
+Description
+
+
+
+create_sample_dataset()
+Downloads a subset of exoplanet data from NASA and labels it as "confirmed."
+
+
+upload_to_lighthouse()
+Uploads a file to Lighthouse Storage and returns its CID.
+
+
+download_from_lighthouse()
+Downloads a file from Lighthouse using its CID.
+
+
+train_model()
+Trains a Random Forest Classifier on the dataset and evaluates accuracy.
+
+
+main()
+Orchestrates the workflow: dataset creation, training, storage, and inference.
+
+
+Key Libraries
+
+pandas: Data manipulation and CSV handling.
+numpy: Numerical operations.
+scikit-learn: Machine learning model training and evaluation.
+joblib: Model serialization.
+requests: HTTP requests for NASA data and Lighthouse downloads.
+lighthouseweb3: Interaction with Lighthouse Storage.
+tempfile: Temporary file management.
+
+📈 Workflow Diagram
+Below is a diagrammatic representation of the AstroFIL MVP workflow:
+🌌 AstroFIL MVP Workflow
+┌──────────────────────────────────────────────────────────────┐
+│ 1. Fetch Data                                                │
+│   ┌───────────────────────────────┐                          │
+│   │ NASA Exoplanet Archive       │                          │
+│   │ URL: .../pscomppars (CSV)    │                          │
+│   └──────────────┬────────────────┘                          │
+│                  │ GET Request (requests)                    │
+└──────────────────┴───────────────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────────────┐
+│ 2. Preprocess Data                                           │
+│   - Read CSV (pandas)                                        │
+│   - Drop NaN values                                          │
+│   - Add 'planet_type' = 1                                    │
+│   - Save as exoplanet.csv (tempfile)                         │
+└──────────────────────────────────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────────────┐
+│ 3. Upload Dataset to Lighthouse                              │
+│   ┌───────────────────────────────┐                          │
+│   │ Lighthouse Storage            │                          │
+│   │ API: lighthouseweb3           │                          │
+│   └──────────────┬────────────────┘                          │
+│                  │ Upload exoplanet.csv                      │
+│                  │ Return dataset_cid                        │
+└──────────────────┴───────────────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────────────┐
+│ 4. Train ML Model                                            │
+│   - Load exoplanet.csv (pandas)                              │
+│   - Features: pl_orbper, pl_rade, pl_bmasse, st_teff         │
+│   - Target: planet_type                                      │
+│   - Split data (train_test_split)                            │
+│   - Train RandomForestClassifier (scikit-learn)              │
+│   - Save model as exoplanet_model.joblib (joblib)            │
+└──────────────────────────────────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────────────┐
+│ 5. Upload Model to Lighthouse                                │
+│   ┌───────────────────────────────┐                          │
+│   │ Lighthouse Storage            │                          │
+│   │ API: lighthouseweb3           │                          │
+│   └──────────────┬────────────────┘                          │
+│                  │ Upload exoplanet_model.joblib             │
+│                  │ Return model_cid                          │
+└──────────────────┴───────────────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────────────┐
+│ 6. Create & Upload Metadata                                  │
+│   - Metadata: title, model_cid, dataset_cid, accuracy, etc.   │
+│   - Save as model_metadata.json (tempfile)                   │
+│   - Upload to Lighthouse                                     │
+│   - Return metadata_cid                                      │
+└──────────────────────────────────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────────────┐
+│ 7. Perform Inference                                         │
+│   - Load test sample from trained data                       │
+│   - Predict using trained model                              │
+│   - Output: "Confirmed Exoplanet" or "Not Confirmed"         │
+└──────────────────────────────────────────────────────────────┘
+
+Explanation of Workflow
+
+Data Fetching: The script queries the NASA Exoplanet Archive for 500 exoplanet records, retrieving orbital period (pl_orbper), radius (pl_rade), mass (pl_bmasse), and stellar temperature (st_teff).
+Preprocessing: The data is cleaned (NaN values removed) and labeled with planet_type = 1 (confirmed exoplanet). It’s saved as exoplanet.csv in a temporary directory.
+Dataset Upload: The CSV file is uploaded to Lighthouse, and a CID is returned for decentralized access.
+Model Training: A Random Forest Classifier is trained on the dataset, using the four features to predict planet_type. The model is serialized as exoplanet_model.joblib.
+Model Upload: The trained model is uploaded to Lighthouse, returning another CID.
+Metadata Creation: A JSON file (model_metadata.json) is created with details like the model’s title, CIDs, accuracy, and data source. This is also uploaded to Lighthouse.
+Inference: The script tests the model on a sample from the test set, printing the prediction.
+
+📊 Expected Output
+When you run the script, you’ll see logs like:
+┌────────────────────────────────────────────────────────────────┐
+│     Process : 🌌 Creating NASA Exoplanet dataset subset...  │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│  Process : Uploading astro dataset to Lighthouse Storage...   │
+└────────────────────────────────────────────────────────────────┘
+✅ Uploaded /tmp/.../exoplanet.csv | CID: Qm...
+🎯 Model Accuracy: 1.0000
+✅ Uploaded /tmp/.../exoplanet_model.joblib | CID: Qm...
+✅ Uploaded /tmp/.../model_metadata.json | CID: Qm...
+🌐 Metadata CID: Qm...
+
+🔭 Performing Inference
+Sample input: {'pl_orbper': 3.524749, 'pl_rade': 4.21, 'pl_bmasse': 8.52, 'st_teff': 5577}
+Prediction: Confirmed Exoplanet
+
+
+CIDs: Unique identifiers for files stored on Lighthouse (Filecoin/IPFS).
+Accuracy: Likely 1.0 since all data is labeled as planet_type = 1 (this is a simplified demo).
+Inference: Shows a sample prediction to verify the model works.
+
+🧪 Testing
+To test the script:
+
+Ensure your Lighthouse API key is valid.
+Verify internet connectivity for NASA API and Lighthouse.
+Check that temporary files are cleaned up (handled by tempfile).
+Optionally, use the download_from_lighthouse function to retrieve and inspect uploaded files:download_from_lighthouse("your-cid-here", "output.csv")
+
+
+
+🔧 Troubleshooting
+
+Lighthouse Upload Fails:
+Check your API key.
+Ensure the file path exists and is accessible.
+Verify your internet connection.
+
+
+NASA API Issues:
+Confirm the URL is correct and accessible.
+Handle rate limits by reducing the query size (e.g., top 100 instead of top 500).
+
+
+Model Accuracy:
+If accuracy seems off, check the dataset for inconsistencies.
+Note: The current model always predicts 1 due to uniform labeling (for demo purposes).
+
+
+
+🌟 Future Improvements
+
+Multi-Class Classification: Extend the model to predict different planet types (e.g., gas giants, terrestrial).
+Feature Engineering: Add more features from the NASA archive (e.g., eccentricity, distance).
+Dynamic Labeling: Fetch non-exoplanet data to create a balanced dataset.
+Model Optimization: Tune hyperparameters or try other algorithms (e.g., XGBoost).
+Interactive UI: Build a web interface to input data and view predictions.
+Decentralized Retrieval: Automate downloading and reusing stored models/datasets.
+
 
 ## Contributing
+Contributions are welcome! Please:
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Fork the repository.
+Create a feature branch (git checkout -b feature/xyz).
+Commit changes (git commit -m "Add xyz feature").
+Push to the branch (git push origin feature/xyz).
+Open a pull request.
+
+## Contact
+For questions or feedback, reach out via GitHub Issues
+
+Happy exploring the cosmos with AstroFIL! 🌠
