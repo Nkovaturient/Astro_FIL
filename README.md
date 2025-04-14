@@ -1,6 +1,6 @@
 ## 🌌 AstroFIL MVP: Exoplanet Classifier with Filecoin/Lightouse 🌌
 
-- The AstroFIL MVP is a Python-based project that demonstrates an end-to-end workflow for building a machine learning model to classify exoplanets using data from the NASA Exoplanet Archive. It integrates decentralized storage via Lighthouse (a Filecoin-based storage solution) to store datasets, trained models, and metadata. The project showcases data retrieval, preprocessing, model training, decentralized storage, and inference, all in a streamlined pipeline.
+- The AstroFIL MVP demonstrates an end-to-end workflow for building a ML model to classify exoplanets using data from the NASA Exoplanet Archive. It integrates decentralized storage via Lighthouse (a Filecoin-based storage solution) to store datasets, trained models, and metadata. The project showcases data retrieval, preprocessing, model training, decentralized storage, and inference, all in a streamlined pipeline.
 
 ## 🌌 Project Overview
 
