@@ -1,6 +1,7 @@
 ## 🌌 AstroFIL : Realtime AI-Powered Exoplanet Classifier with Filecoin & Lighthouse 🌌
-
-- The AstroFIL MVP demonstrates an end-to-end workflow for building a ML model to classify exoplanets using data from the NASA Exoplanet Archive. It integrates decentralized storage via Lighthouse (a Filecoin-based storage solution) to store datasets, trained models, and metadata. The project showcases data retrieval, preprocessing, model training, decentralized storage, and inference, all in a streamlined pipeline.
+- Have you ever been awed by the vastness of universe, or the formation of stars, pillars of creation, black holes and exoplanets outside Earth, like Earth?!
+- Envisioned with the aim of contributing to open science discovery, bringing more clarification and data accessibility within the scientific ecosystem along with efficient outputs of trained AI and ML models on nuances of exoplanets related datasets for quicker solutions, this Project is a step in fulfilling the vision. 
+- AstroFIL demonstrates an end-to-end workflow for building a ML model to classify exoplanets using data from the NASA Exoplanet Archive. It integrates decentralized storage via Lighthouse (a Filecoin-based storage solution) to store datasets, trained models, and metadata. The project showcases data retrieval, preprocessing, model training, decentralized storage, and inference, all in a streamlined pipeline.
 - Fosters decentralized access, real-time adaptability, and scientific collaboration.
 
 ## Preview:
