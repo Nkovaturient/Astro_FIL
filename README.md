@@ -4,9 +4,10 @@
 - AstroFIL demonstrates an end-to-end workflow for building a ML model to classify exoplanets using data from the NASA Exoplanet Archive. It integrates decentralized storage via Lighthouse (a Filecoin-based storage solution) to store datasets, trained models, and metadata. The project showcases data retrieval, preprocessing, model training, decentralized storage, and inference, all in a streamlined pipeline.
 - Fosters decentralized security, real-time adaptability, efficiency and scientific collaboration.
 
-## Preview:
+## Preview: [Youtube Link](https://youtu.be/UA7_ffr4nYs?si=_0dy7OzzlF-HN5zl)
 
-https://www.loom.com/share/494de5ba0e214daf99716afbb5b0f5d2?sid=3fbca0db-0624-419c-80cb-247c093769bc
+[AstroFIL](https://github.com/user-attachments/assets/b974f9c5-613d-4935-b699-5122cda027ef)
+
 ---
 
 ## 🌌 Project Overview
