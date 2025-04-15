@@ -18,6 +18,8 @@
 4. **Store on Lighthouse/Filecoin**: Uploads dataset, model (`.joblib`), and metadata (`.json`) to Lighthouse Storage and returns IPFS CIDs.
 5. **Inference + Decentralized Retrieval**: Model is reloaded from CID, and predictions are made on test data.
 
+---
+
 ## 🎯 Features
 
 - 🔭 **Data Source**: NASA Exoplanet Archive API.
@@ -28,24 +30,15 @@
 - ♻️ **Temp Management**: Efficient tempfile cleanup.
 - 📰 **NER on ArXiv Abstracts**: Keyword extraction from latest papers.
 
+---
+
 ## 📋 Prerequisites
 - Before running the project, ensure you have:
 
 - Python 3.8+ installed.
 - A Lighthouse API key (sign up at Lighthouse Storage).
 
-## Dependencies
-- Install the required Python packages listed in `requirements.txt`:
-```pandas
-numpy
-scikit-learn
-joblib
-requests
-lighthouseweb3
-```
-
-- Run the following command to install dependencies:
-`pip install -r requirements.txt`
+---
 
 ## 🚀 Setup Instructions
 
@@ -62,7 +55,22 @@ lighthouseweb3
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
-3. Install the required packages:
+3. Install the required dependencies
+-  in `requirements.txt`:
+    ```bash
+    pandas
+    numpy
+    scikit-learn
+    joblib
+    requests
+    lighthouseweb3
+    python-dotenv
+    feedparser
+    transformers
+    torch
+    torchvision
+    torchaudio
+    ```
 
    ```bash
    pip install -r requirements.txt
@@ -74,8 +82,9 @@ lighthouseweb3
 - Update the API_KEY variable in the script:API_KEY = "your-lighthouse-api-key"
 
 5. Run the Script:
-`python astrofil.py`
+`python -m astrofil`
 
+---
 
 ## 🛠️ Code Structure
 - The project consists of the following key functions:
