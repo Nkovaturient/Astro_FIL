@@ -1,27 +1,30 @@
-## 🌌 AstroFIL MVP: Exoplanet Classifier with Filecoin/Lightouse 🌌
+## 🌌 AstroFIL : Realtime AI-Powered Exoplanet Classifier with Filecoin & Lighthouse 🌌
 
 - The AstroFIL MVP demonstrates an end-to-end workflow for building a ML model to classify exoplanets using data from the NASA Exoplanet Archive. It integrates decentralized storage via Lighthouse (a Filecoin-based storage solution) to store datasets, trained models, and metadata. The project showcases data retrieval, preprocessing, model training, decentralized storage, and inference, all in a streamlined pipeline.
+- Fosters decentralized access, real-time adaptability, and scientific collaboration.
+
+## Preview:
+
+https://www.loom.com/share/494de5ba0e214daf99716afbb5b0f5d2?sid=3fbca0db-0624-419c-80cb-247c093769bc
+---
 
 ## 🌌 Project Overview
 
-- The AstroFIL MVP performs the following tasks:
-- Fetches exoplanet data from the NASA Exoplanet Archive.
-- Preprocesses the data into a clean, usable format.
-- Trains a Random Forest Classifier to label exoplanets as "confirmed."
-- Uploads the dataset, trained model, and metadata to Lighthouse Storage.
-- Performs inference on sample data to demonstrate the model's functionality.
-- Stores metadata with Content Identifiers (CIDs) for decentralized access.
-
-The project is designed for scalability and reproducibility, leveraging decentralized storage to ensure data and model persistence.
+1. **Fetch Realtime Scientific Papers**: Queries latest [arXiv astro-ph](https://arxiv.org/list/astro-ph/new) abstracts and extracts scientific keywords using NER (BERT).
+2. **Generate Dynamic Dataset**: Retrieves exoplanet data from NASA, synthesizes negative samples for classification, and labels accordingly.
+3. **Train ML Model**: Uses a Random Forest classifier to learn exoplanet classification based on four physical features.
+4. **Store on Lighthouse/Filecoin**: Uploads dataset, model (`.joblib`), and metadata (`.json`) to Lighthouse Storage and returns IPFS CIDs.
+5. **Inference + Decentralized Retrieval**: Model is reloaded from CID, and predictions are made on test data.
 
 ## 🎯 Features
 
-- Data Source: Pulls realtime exoplanet data (orbital period, radius, mass, stellar temperature) from [NASA's Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+top+500+pl_orbper,pl_rade,pl_bmasse,st_teff+from+pscomppars&format=csv)
-- Machine Learning: Trains a Random Forest Classifier with scikit-learn.
-- Decentralized Storage: Uses Lighthouse to store files on the Filecoin network, returning CIDs for retrieval.
-- Error Handling: Includes robust checks for upload/download failures.
-- Temporary File Management: Uses Python's tempfile to handle temporary files cleanly.
-- Inference: Demonstrates model predictions on test data.
+- 🔭 **Data Source**: NASA Exoplanet Archive API.
+- 🧠 **ML Model**: Random Forest Classifier (scikit-learn).
+- 📦 **Decentralized Storage**: Lighthouse + Filecoin/IPFS.
+- 🧪 **Inference Ready**: Demonstrates real-time sample classification.
+- 🔐 **Robust Handling**: Upload, download, and failure-safe CID operations.
+- ♻️ **Temp Management**: Efficient tempfile cleanup.
+- 📰 **NER on ArXiv Abstracts**: Keyword extraction from latest papers.
 
 ## 📋 Prerequisites
 - Before running the project, ensure you have:
@@ -78,19 +81,30 @@ lighthouseweb3
    - `create_sample_dataset()` - Downloads a subset of exoplanet data from NASA and labels it as "confirmed."
    - `upload_to_lighthouse()` - Uploads a file to Lighthouse Storage and returns its CID.
    - `download_from_lighthouse()` - Downloads a file from Lighthouse using its CID.
+   - `fetch_arxiv_astro_papers()` – Get abstracts from arXiv (astro-ph)
+   - `extract_keywords()` – Use BERT NER to extract topic keywords
    - `train_model()` - Trains a Random Forest Classifier on the dataset and evaluates accuracy.
    - `main()` - Orchestrates the workflow: dataset creation, training, storage, and inference.
 
+---
 
 ## Key Libraries
 
-- pandas: Data manipulation and CSV handling.
-- numpy: Numerical operations.
-- scikit-learn: Machine learning model training and evaluation.
-- joblib: Model serialization.
-- requests: HTTP requests for NASA data and Lighthouse downloads.
-- lighthouseweb3: Interaction with Lighthouse Storage.
+- `pandas`, `numpy`, `scikit-learn`, `joblib` – ML pipeline
+- `requests`, `feedparser` – Data fetching
+- `lighthouseweb3` – IPFS/Filecoin Storage
+- `transformers`, `pipeline` – Keyword extraction (NER)
 
+---
+
+## 🧠 Realtime Pipeline Explained
+
+- **ArXiv paper titles + abstracts** ⟶ Keywords
+- **Keywords** drive context, tracked with dataset & metadata
+- **NASA exoplanet dataset** ⟶ Classifier ⟶ Decentralized upload
+- Run inference on downloaded **model** + **test** data
+
+---
 
 <!-- ## 📈 Workflow Diagram
 - Below is a diagrammatic representation of the AstroFIL MVP workflow:
@@ -158,7 +172,7 @@ lighthouseweb3
 │   - Predict using trained model                              │
 │   - Output: "Confirmed Exoplanet" or "Not Confirmed"         │
 └──────────────────────────────────────────────────────────────┘
--->
+
 
 ## Explanation of Workflow
 
@@ -169,40 +183,16 @@ lighthouseweb3
 - **Model Upload**: The trained model is uploaded to Lighthouse, returning another CID.
 - **Metadata Creation**: A JSON file (model_metadata.json) is created with details like the model’s title, CIDs, accuracy, and data source. This is also uploaded to Lighthouse.
 - **Inference**: The script tests the model on a sample from the test set, printing the prediction.
-
-<!-- 📊 Expected Output
-When you run the script, you’ll see logs like:
-┌────────────────────────────────────────────────────────────────┐
-│     Process : 🌌 Creating NASA Exoplanet dataset subset...  │
-└────────────────────────────────────────────────────────────────┘
-
-┌────────────────────────────────────────────────────────────────┐
-│  Process : Uploading astro dataset to Lighthouse Storage...   │
-└────────────────────────────────────────────────────────────────┘
-✅ Uploaded /tmp/.../exoplanet.csv | CID: Qm...
-🎯 Model Accuracy: 1.0000
-✅ Uploaded /tmp/.../exoplanet_model.joblib | CID: Qm...
-✅ Uploaded /tmp/.../model_metadata.json | CID: Qm...
-🌐 Metadata CID: Qm...
-
-🔭 Performing Inference
-Sample input: {'pl_orbper': 3.524749, 'pl_rade': 4.21, 'pl_bmasse': 8.52, 'st_teff': 5577}
-Prediction: Confirmed Exoplanet
-
-
-CIDs: Unique identifiers for files stored on Lighthouse (Filecoin/IPFS).
-Accuracy: Likely 1.0 since all data is labeled as planet_type = 1 (this is a simplified demo).
-Inference: Shows a sample prediction to verify the model works.  -->
+-->
 
 ## 🌟 Future Improvements
 
-- **Multi-Class Classification**: Extend the model to predict different planet types (e.g., gas giants, terrestrial, neutron-stars).
-- **Feature Engineering**: Add more features from the NASA archive (e.g., eccentricity, distance).
-- **Dynamic Labeling**: Fetch non-exoplanet data to create a balanced dataset.
-- **Model Optimization**: Tune hyperparameters or try other algorithms (e.g., XGBoost).
-- **Interactive UI**: Build a web interface to input data and view predictions.
-- **Decentralized Retrieval**: Automate downloading and reusing stored models/datasets.
+- 🌐 Multi-label: Classify gas giants, terrestrials, and neutron stars.
+- 🌌 Expand features: Add stellar eccentricity, distance, and magnitude.
+- 🔄 Label diversity: Add real-world unconfirmed objects.
+- 🧪 AutoML: Try XGBoost or GridSearch tuning.
+- 🕸️ IPFS-based UI: Build browser-based querying via CID.
 
 
 ## Endnote
-**Happy exploring the cosmos with AstroFIL! 🌠**
+**Built with curiosity and cosmos in mind. Explore decentralized space research with AstroFIL 🌠😊😍**
