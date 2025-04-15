@@ -42,10 +42,10 @@
 
 ## 🚀 Setup Instructions
 
-1. Clone the Repository:
+1. Fork and Clone the Repository:
     ```
     git clone <repository-url>
-    cd astrofil-mvp
+    cd astro_fil
      ```
 
 2. Create a virtual environment:
